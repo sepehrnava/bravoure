@@ -5,7 +5,7 @@
     @apply text-white overflow-auto;
   }
   .slider {
-    @apply flex p-4 gap-10;
+    @apply flex p-4 gap-14;
   }
   .slider_item {
     @apply flex flex-col flex-shrink-0 w-60 gap-5 cursor-pointer;
@@ -20,7 +20,7 @@
     @apply text-sm;
   }
   .slider_caption {
-    @apply text-xs opacity-80;
+    @apply text-xs;
   }
   .slider_arrows {
     @apply absolute bottom-10 right-10 flex justify-between items-center gap-5 cursor-pointer;

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Image from "next/image";
 import ScrollContainer from "react-indiana-drag-scroll";
 import styles from "../styles/Slider.module.css";
@@ -17,42 +17,27 @@ const Slider = ({
 }: I_SLIDER) => {
   const sliderRef = useRef<HTMLDivElement>(null);
 
-  const [scrollPosition, setScrollPosition] = useState<
-    "start" | "end" | "between"
-  >("start");
-
   const onClickArrows = (direction: "left" | "right") => {
-    if (direction === "left") {
-      sliderRef.current?.scrollBy({ left: -560, behavior: "smooth" });
-    } else {
-      sliderRef.current?.scrollBy({ left: 560, behavior: "smooth" });
+    if (direction === "left" && selectedEpisode > 0) {
+      setSelectedEpisode(selectedEpisode - 1);
+    }
+    if (direction === "right" && selectedEpisode < episodes.length - 1) {
+      setSelectedEpisode(selectedEpisode + 1);
     }
   };
 
-  const onClickSlider = (index: number) => {
-    sliderRef.current?.scrollTo({
-      left: index * 280,
-      behavior: "smooth",
-    });
+  const onClickSlide = (index: number) => {
     setSelectedEpisode(index);
   };
 
   useEffect(() => {
-    sliderRef.current?.addEventListener("scroll", () => {
-      if (sliderRef.current) {
-        const endOfScrollWidth =
-          sliderRef.current.scrollWidth - sliderRef.current.offsetWidth;
-
-        if (sliderRef.current.scrollLeft === 0) {
-          setScrollPosition("start");
-        } else if (sliderRef.current.scrollLeft === endOfScrollWidth) {
-          setScrollPosition("end");
-        } else {
-          setScrollPosition("between");
-        }
-      }
-    });
-  }, []);
+    if (sliderRef.current) {
+      sliderRef.current.scrollTo({
+        left: selectedEpisode * 296,
+        behavior: "smooth",
+      });
+    }
+  }, [selectedEpisode]);
 
   return (
     <div className={styles.slider_container}>
@@ -62,14 +47,14 @@ const Slider = ({
             <div
               key={index}
               className={styles.slider_item}
-              onClick={() => onClickSlider(index)}
+              onClick={() => onClickSlide(index)}
             >
               <div>
                 <Image
                   src={episode.Poster}
                   alt="episode"
                   fill
-                  className={`transition-opacity ${
+                  className={`${styles.slider_title} transition-opacity ${
                     selectedEpisode === index ? "opacity-100" : "opacity-40"
                   }`}
                 />
@@ -78,9 +63,21 @@ const Slider = ({
                 </div>
               </div>
 
-              <p className={styles.slider_title}>{episode.Title}</p>
+              <p
+                className={`${styles.slider_title} transition-opacity ${
+                  selectedEpisode === index ? "opacity-100" : "opacity-40"
+                }`}
+              >
+                {episode.Title}
+              </p>
 
-              <p className={styles.slider_caption}>{episode.Plot}</p>
+              <p
+                className={`${styles.slider_caption} transition-opacity ${
+                  selectedEpisode === index ? "opacity-80" : "opacity-40"
+                }`}
+              >
+                {episode.Plot}
+              </p>
             </div>
           );
         })}
@@ -92,7 +89,7 @@ const Slider = ({
           height={20}
           width={35}
           className={`transition-opacity transform rotate-180 ${
-            scrollPosition === "start" ? "opacity-20" : "opacity-100"
+            selectedEpisode === 0 ? "opacity-20" : "opacity-100"
           }`}
           onClick={() => onClickArrows("left")}
         />
@@ -103,7 +100,9 @@ const Slider = ({
           width={35}
           onClick={() => onClickArrows("right")}
           className={`transition-opacity ${
-            scrollPosition === "end" ? "opacity-20" : "opacity-100"
+            selectedEpisode === episodes.length - 1
+              ? "opacity-20"
+              : "opacity-100"
           }`}
         />
       </div>

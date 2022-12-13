@@ -43,6 +43,10 @@ export const getSeason = async (series: string, season: number) => {
 
   const episodes = unSortedEpisodes.sort((a, b) => a.index - b.index);
 
+  episodes.forEach((element) => {
+    element.Poster = element.Poster.replace("SX300", "SX1200");
+  });
+
   const { Poster, Plot } = seriesData;
 
   return { ...seasonData, Episodes: episodes, Poster, Plot };
