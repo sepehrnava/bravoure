@@ -18,6 +18,11 @@
   }
   .season_info_slider {
     @apply absolute bottom-0 left-0 w-full text-white flex flex-col gap-32 pb-20;
+    background: linear-gradient(
+      180.78deg,
+      rgba(0, 0, 0, 0) 0%,
+      rgba(0, 0, 0, 0.29713) 100%
+    );
   }
   .season_info {
     @apply px-3 lg:px-14;
