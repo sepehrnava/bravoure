@@ -1,8 +1,8 @@
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import ScrollContainer from "react-indiana-drag-scroll";
 import styles from "../styles/Slider.module.css";
 import { EPISODE } from "lib/Interfaces";
-import { useRef } from "react";
 
 interface I_SLIDER {
   episodes: EPISODE[];
@@ -16,6 +16,10 @@ const Slider = ({
   setSelectedEpisode,
 }: I_SLIDER) => {
   const sliderRef = useRef<HTMLDivElement>(null);
+
+  const [scrollPosition, setScrollPosition] = useState<
+    "start" | "end" | "between"
+  >("start");
 
   const onClickArrows = (direction: "left" | "right") => {
     if (direction === "left") {
@@ -32,6 +36,23 @@ const Slider = ({
     });
     setSelectedEpisode(index);
   };
+
+  useEffect(() => {
+    sliderRef.current?.addEventListener("scroll", () => {
+      if (sliderRef.current) {
+        const endOfScrollWidth =
+          sliderRef.current.scrollWidth - sliderRef.current.offsetWidth;
+
+        if (sliderRef.current.scrollLeft === 0) {
+          setScrollPosition("start");
+        } else if (sliderRef.current.scrollLeft === endOfScrollWidth) {
+          setScrollPosition("end");
+        } else {
+          setScrollPosition("between");
+        }
+      }
+    });
+  }, []);
 
   return (
     <div className={styles.slider_container}>
@@ -70,7 +91,9 @@ const Slider = ({
           alt="Tv Series"
           height={20}
           width={35}
-          className="transform rotate-180"
+          className={`transition-opacity transform rotate-180 ${
+            scrollPosition === "start" ? "opacity-20" : "opacity-100"
+          }`}
           onClick={() => onClickArrows("left")}
         />
         <Image
@@ -79,6 +102,9 @@ const Slider = ({
           height={20}
           width={35}
           onClick={() => onClickArrows("right")}
+          className={`transition-opacity ${
+            scrollPosition === "end" ? "opacity-20" : "opacity-100"
+          }`}
         />
       </div>
     </div>

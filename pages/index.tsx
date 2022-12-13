@@ -15,7 +15,6 @@ const tvSeries = "Insecure";
 
 export default function Home({ isError }: I_HOME) {
   const { data } = useQuery<SEASON>(["InsecurefirstSeason"]);
-  console.log(data);
 
   const [selectedEpisode, setSelectedEpisode] = useState(0);
 
