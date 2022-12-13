@@ -27,7 +27,8 @@ export default function Home({ isError }: I_HOME) {
       <div className={styles.wrapper}>
         <div>
           <Image
-            src={data.Poster}
+            // src={data.Poster}
+            src="/insecure.png"
             alt="Tv Series"
             fill
             className={styles.season_poster}
