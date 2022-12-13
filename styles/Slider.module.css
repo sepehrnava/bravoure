@@ -1,0 +1,28 @@
+@tailwind components;
+
+@layer components {
+  .slider_container {
+    @apply text-white overflow-auto;
+  }
+  .slider {
+    @apply flex p-4 gap-10;
+  }
+  .slider_item {
+    @apply flex flex-col flex-shrink-0 w-60 gap-5 cursor-pointer;
+  }
+  .slider_item > div {
+    @apply h-40 w-60 relative bg-black;
+  }
+  .slider_episode_number {
+    @apply absolute top-0 left-0 bg-white text-black font-bold h-9 w-9 flex items-center justify-center;
+  }
+  .slider_title {
+    @apply text-sm;
+  }
+  .slider_caption {
+    @apply text-xs opacity-80;
+  }
+  .slider_arrows {
+    @apply absolute bottom-10 right-10 flex justify-between items-center gap-5 cursor-pointer;
+  }
+}

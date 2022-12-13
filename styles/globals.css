@@ -19,8 +19,16 @@ a {
   box-sizing: border-box;
 }
 
-img {
-  object-fit: cover;
+@layer base {
+  img {
+    @apply object-cover;
+  }
+  h1 {
+    @apply text-7xl font-bold;
+  }
+  p {
+    @apply text-xl max-w-2xl flex;
+  }
 }
 
 /* @media (prefers-color-scheme: dark) {

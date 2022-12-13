@@ -2,12 +2,45 @@
 
 @layer components {
   .wrapper {
-    @apply grid grid-cols-1 lg:grid-cols-3 lg:grid-rows-2;
+    @apply grid grid-cols-1 lg:grid-cols-3 lg:grid-rows-5 max-h-screen;
   }
-  .wrapper div {
+  .wrapper > div {
     @apply relative;
   }
-  .wrapper div:nth-child(1) {
-    @apply min-h-screen row-span-3 lg:row-span-2 lg:col-span-2;
+  .wrapper > div:nth-child(1) {
+    @apply min-h-screen lg:row-span-5 lg:col-span-2 bg-black;
+  }
+  .wrapper > div:nth-child(2) {
+    @apply row-span-3 h-96 lg:h-auto;
+  }
+  .wrapper > div:nth-child(3) {
+    @apply row-span-2;
+  }
+  .season_info_slider {
+    @apply absolute bottom-0 left-0 w-full text-white flex flex-col gap-32 pb-20;
+  }
+  .season_info {
+    @apply px-3 lg:px-14;
+  }
+  .season_poster {
+    @apply opacity-50;
+  }
+  .episode_info {
+    @apply flex flex-col;
+  }
+  .episode_date_rating {
+    @apply flex flex-row justify-between items-center p-10 pt-12;
+  }
+  .episode_date_rating p {
+    @apply text-base;
+  }
+  .episode_rating {
+    @apply flex flex-row gap-2 items-end;
+  }
+  .episode_caption_container {
+    @apply flex flex-col h-full p-10;
+  }
+  .episode_title {
+    @apply font-bold text-2xl mb-1;
   }
 }

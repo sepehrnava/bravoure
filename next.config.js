@@ -1,4 +1,5 @@
 /** @type {import('next').NextConfig} */
+
 const nextConfig = {
   reactStrictMode: true,
   swcMinify: true,
@@ -8,6 +9,15 @@ const nextConfig = {
   },
   images: {
     domains: ["m.media-amazon.com"],
+  },
+  webpack(config) {
+    config.module.rules.push({
+      issuer: /\.[jt]sx?$/,
+      test: /\.svg$/i,
+      use: ["@svgr/webpack"],
+    });
+
+    return config;
   },
 };
 
